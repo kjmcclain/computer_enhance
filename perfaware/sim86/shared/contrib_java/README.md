@@ -71,10 +71,11 @@ java Build.java
 
 First, this will compile the java code from `src` into
 `out/production/contrib_java`, and then package it as a jar file
-`sim86.jar`.  (This should work on all platforms.)
+`sim86.jar`.  It'll also compile the test code as well.  (This should
+work on all platforms.)
 
 Second, it will attempt to build both the shared library `libsim86.so`
-from `../sim86_lib.cpp` and glue shared library `libsim86java.so` from
+from `../../sim86_lib.cpp` and glue shared library `libsim86java.so` from
 `c/sim86_lib_java.c`.  On Mac, this uses `clang` and on linux, it uses
 both `gcc` and `clang` since `../sim86_lib.h` uses c23 features that
 gcc doesn't implement, but clang seems to be okay with.
