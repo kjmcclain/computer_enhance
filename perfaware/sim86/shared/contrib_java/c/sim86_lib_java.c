@@ -15,14 +15,6 @@ JNIEXPORT jint JNICALL Java_com_computerenhance_sim86_Decoder_version
   return Sim86_GetVersion();
 }
 
-void fail(char *s)
-{
-  printf("%s\n", s);
-  exit(1);
-}
-
-#define check(x) if (!x) fail("no " #x)
-
 /*
  * Class:     com_computerenhance_sim86_Decoder
  * Method:    decode
@@ -32,31 +24,20 @@ JNIEXPORT void JNICALL Java_com_computerenhance_sim86_Decoder_decode
 (JNIEnv *env, jobject obj)
 {
   jclass objClass = (*env)->GetObjectClass(env, obj);
-  check(objClass);
 
   jfieldID outBufferField = (*env)->GetFieldID(env, objClass, "outBuffer", "[B");
-  check(outBufferField);
   jobject outBuffer = (*env)->GetObjectField(env, obj, outBufferField);
-  check(outBuffer);
   jbyte *outArray = (*env)->GetByteArrayElements(env, outBuffer, 0);
-  check(outArray);
 
   jfieldID inField = (*env)->GetFieldID(env, objClass, "in", "Ljava/nio/ByteBuffer;");
-  check(inField);
   jobject in = (*env)->GetObjectField(env, obj, inField);
-  check(in);
 
   jclass byteBufferClass = (*env)->GetObjectClass(env, in);
-  check(byteBufferClass);
   jmethodID arrayMethod = (*env)->GetMethodID(env, byteBufferClass, "array", "()[B");
-  check(arrayMethod);
   jmethodID setPositionMethod = (*env)->GetMethodID(env, byteBufferClass,
 						    "position", "(I)Ljava/nio/ByteBuffer;");
-  check(setPositionMethod);
   jmethodID positionMethod = (*env)->GetMethodID(env, byteBufferClass, "position", "()I");
-  check(positionMethod);
   jmethodID limitMethod = (*env)->GetMethodID(env, byteBufferClass, "limit", "()I");
-  check(limitMethod);
 
   jobject inBuffer = (*env)->CallObjectMethod(env, in, arrayMethod);
   jint position = (*env)->CallIntMethod(env, in, positionMethod);
